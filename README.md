@@ -22,4 +22,9 @@
     前端采用ant design组件库
     使用swagger对接口进行管理
     使用druid对于数据库进行监控
+### 模块划分
+    lts-school处理人员信息
+    lts-news处理新闻
+    lts-webmagic处理抓爬业务
+    lts-map处理地图相关信息（是否启用看高德地图api是否满足业务需求）
   
