@@ -1,0 +1,54 @@
+server:
+  port: 8089
+
+
+spring:
+  datasource.lts:
+    driverClassName: com.mysql.jdbc.Driver
+    dbType: mysql
+    url: jdbc:mysql://localhost:3306/fenci?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: root
+    password: 940131
+    initialSize: 30
+    maxActive: 50
+    validationQuery: SELECT 1
+    testOnBorrow: true
+    testWhileIdle: true
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 100
+    filters: stat,wall,log4j
+
+#  # redis
+#  redis:
+#    database: 0       # Redis数据库索引（默认为0）
+#    host:
+#    port:
+#    password: :
+#    timeout:    # ms
+#    pool:
+#      max-active: 12   # 连接池最大连接数（使用负值表示没有限制）
+#      max-wait: -1     # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#      max-idle: 4      # 连接池中的最大空闲连接
+#      min-idle: 1      # 连接池中的最小空闲连接
+
+  # mongo
+  data:
+    mongodb:
+      database:test
+      host:127.0.0.1
+      port:2017
+      username:lts
+      password:123
+
+
+# 打印sql执行信息
+logging:
+  level:
+    com:
+      xu:
+        demo:
+          mapper: debug
+
+
+
