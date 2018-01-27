@@ -6,9 +6,9 @@ spring:
   datasource.lts:
     driverClassName: com.mysql.jdbc.Driver
     dbType: mysql
-    url: jdbc:mysql://localhost:3306/fenci?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/school?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: 940131
+    password: 19940131
     initialSize: 30
     maxActive: 50
     validationQuery: SELECT 1
@@ -41,14 +41,6 @@ spring:
       username:lts
       password:123
 
-
-# 打印sql执行信息
-logging:
-  level:
-    com:
-      xu:
-        demo:
-          mapper: debug
 
 
 

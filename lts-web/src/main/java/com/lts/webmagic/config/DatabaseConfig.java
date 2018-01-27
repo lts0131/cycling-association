@@ -6,7 +6,11 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.wall.WallConfig;
 import com.alibaba.druid.wall.WallFilter;
+import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -18,8 +22,10 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @Configuration
+
 public class DatabaseConfig {
 
 	private static Logger logger = Logger.getLogger(DatabaseConfig.class);
@@ -34,40 +40,22 @@ public class DatabaseConfig {
 		return reg;
 	}
 
-	@Primary
-	@Bean(name = "miDataSource")
-	@ConfigurationProperties(prefix = "spring.datasource.lts")
-	public DataSource ecssentDataSource() {
-		//return new DruidDataSource();
-		DruidDataSource druidDataSource = new DruidDataSource();
-		List<Filter> filterList=new ArrayList<>();
-		filterList.add(wallFilter());
-		druidDataSource.setProxyFilters(filterList);
-		return druidDataSource;
-	}
+    @Primary
+    @Bean(name = "miSqlSessionFactory")
+    public SqlSessionFactory miSqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 
-
-	@Bean
-	public FilterRegistrationBean filterRegistrationBean() {
-		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-		filterRegistrationBean.setFilter(new WebStatFilter());
-		filterRegistrationBean.addUrlPatterns("/*");
-		filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
-		return filterRegistrationBean;
-	}
-
-	@Bean
-	public WallFilter wallFilter(){
-		WallFilter wallFilter=new WallFilter();
-		wallFilter.setConfig(wallConfig());
-		return  wallFilter;
-	}
-	@Bean
-	public WallConfig wallConfig(){
-		WallConfig config =new WallConfig();
-		config.setMultiStatementAllow(true);//允许一次执行多条语句
-		config.setNoneBaseStatementAllow(true);//允许非基本语句的其他语句
-		return config;
-	}
-
+        PageHelper pageHelper = new PageHelper();
+        Properties properties = new Properties();
+        properties.setProperty("dialect", "mysql");
+        properties.setProperty("pageSizeZero", "true");
+        properties.setProperty("reasonable", "false");
+        properties.setProperty("params", "pageNum=pageHelperStart;pageSize=pageHelperRows;");
+        properties.setProperty("supportMethodsArguments", "true");
+        properties.setProperty("returnPageInfo", "none");
+        pageHelper.setProperties(properties);
+//		Interceptor[] interceptors = new Interceptor[] { pageHelper };
+//		sqlSessionFactoryBean.setPlugins(interceptors);
+        return sqlSessionFactoryBean.getObject();
+    }
 }

@@ -16,15 +16,17 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>spring-boot-demo</name>
-    <description>Spring-Boot-Webmagic</description>
+    <description>Spring-Boot-school</description>
 
 
 
     <modules>
-        <module>lts-webmagic</module>
+        <module>lts-web</module>
         <module>lts-news</module>
         <module>lts-school</module>
         <module>lts-map</module>
+        <module>lts-commen</module>
+        <module>lts-webmagic</module>
     </modules>
 
     <properties>
